@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { saveExpensesToLocalStorage } from "../utils/localStorage";
 import fakeData from "../fakeData.json";
 
 const initialState = {
@@ -12,6 +13,7 @@ const expenseSlice = createSlice({
   reducers: {
     addExpense: (state, action) => {
       state.expenses.push(action.payload);
+      saveExpensesToLocalStorage(state.expenses);
     },
     updateExpense: (state, action) => {
       const index = state.expenses.findIndex(
@@ -19,12 +21,14 @@ const expenseSlice = createSlice({
       );
       if (index !== -1) {
         state.expenses[index] = action.payload;
+        saveExpensesToLocalStorage(state.expenses);
       }
     },
     deleteExpense: (state, action) => {
       state.expenses = state.expenses.filter(
         (exp) => exp.id !== action.payload
       );
+      saveExpensesToLocalStorage(state.expenses);
     },
     setSelectedMonth: (state, action) => {
       state.selectedMonth = action.payload;
