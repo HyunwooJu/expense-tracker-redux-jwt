@@ -7,7 +7,7 @@ const API_URL =
 
 // axios 인스턴스 생성
 const apiClient = axios.create({
-  baseURL: `${API_URL}`, // 포트 번호를 포함하지 않음
+  baseURL: API_URL, // 포트 번호는 필요하지 않습니다.
 });
 
 // 요청 인터셉터를 통해 토큰 추가
