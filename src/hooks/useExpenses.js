@@ -1,12 +1,27 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  fetchExpenses,
-  addExpense,
-  updateExpense,
-  deleteExpense,
-} from "../api/expenses";
+import apiClient from "../apiClient";
 import { useSelector } from "react-redux";
 import { selectUser } from "../store/authSlice";
+
+const fetchExpenses = async () => {
+  const response = await apiClient.get("/expenses");
+  return response.data;
+};
+
+const addExpense = async (expense) => {
+  const response = await apiClient.post("/expenses", expense);
+  return response.data;
+};
+
+const updateExpense = async (expense) => {
+  const response = await apiClient.put(`/expenses/${expense.id}`, expense);
+  return response.data;
+};
+
+const deleteExpense = async (id) => {
+  const response = await apiClient.delete(`/expenses/${id}`);
+  return response.data;
+};
 
 export const useExpenses = () => {
   const queryClient = useQueryClient();
