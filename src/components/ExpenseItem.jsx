@@ -2,60 +2,44 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const ExpenseItem = ({ expense }) => {
-  const navigate = useNavigate();
-
-  const handleDetailClick = () => {
-    navigate(`/detail/${expense.id}`);
-  };
-
-  return (
-    <Item onClick={handleDetailClick}>
-      <Date>{expense.date}</Date>
-      <ItemText>{expense.item}</ItemText>
-      <Amount>{expense.amount.toLocaleString()}원</Amount>
-      <Description>{expense.description}</Description>
-    </Item>
-  );
-};
-
-const Item = styled.div`
+const ItemContainer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border-bottom: 1px solid #ddd;
   cursor: pointer;
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: #f9f9f9;
   }
 `;
 
-const Date = styled.div`
-  flex: 1;
+const ItemInfo = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
-const ItemText = styled.div`
-  flex: 2;
-  white-space: nowrap; /* 한 줄로 제한 */
-  overflow: hidden; /* 넘친 부분 숨기기 */
-  text-overflow: ellipsis; /* ... 표시 */
-  max-width: 100px; /* 너비 제한 */
+const ItemAmount = styled.div`
+  font-weight: bold;
 `;
 
-const Amount = styled.div`
-  flex: 1;
-  text-align: right;
-`;
+const ExpenseItem = ({ expense }) => {
+  const navigate = useNavigate();
 
-const Description = styled.div`
-  flex: 3;
-  white-space: nowrap; /* 한 줄로 제한 */
-  overflow: hidden; /* 넘친 부분 숨기기 */
-  text-overflow: ellipsis; /* ... 표시 */
-  text-align: right;
-  max-width: 200px; /* 너비 제한 */
-`;
+  const handleClick = () => {
+    navigate(`/expense/${expense.id}`);
+  };
+
+  return (
+    <ItemContainer onClick={handleClick}>
+      <ItemInfo>
+        <div>{expense.date}</div>
+        <div>{expense.item}</div>
+        <div>{expense.createdBy}</div>
+      </ItemInfo>
+      <ItemAmount>{expense.amount}원</ItemAmount>
+    </ItemContainer>
+  );
+};
 
 export default ExpenseItem;

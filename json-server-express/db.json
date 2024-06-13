@@ -1,0 +1,100 @@
+{
+  "expenses": [
+    {
+      "id": 1,
+      "date": "2024-06-13",
+      "item": "커피",
+      "amount": 20000,
+      "description": "커피 샀습니다.",
+      "createdBy": "주댕댕"
+    },
+    {
+      "id": 2,
+      "date": "2024-06-20",
+      "item": "옷",
+      "amount": 10000,
+      "description": "옷 샀습니다.",
+      "createdBy": "주댕댕"
+    },
+    {
+      "id": "1718125846517",
+      "date": "2024-07-26",
+      "item": "콜라",
+      "amount": 10000,
+      "description": "콜라 샀음.",
+      "createdBy": "주댕댕"
+    },
+    {
+      "id": "1718163214381",
+      "date": "2024-06-14",
+      "item": "립밤",
+      "amount": 800,
+      "description": "립밤 샀습니다.",
+      "createdBy": "주댕댕"
+    },
+    {
+      "id": "1718177307311",
+      "date": "2024-04-11",
+      "item": "펜",
+      "amount": 5000,
+      "description": "펜 샀다.",
+      "createdBy": "주댕댕"
+    },
+    {
+      "id": "1718178478291",
+      "date": "2024-09-24",
+      "item": "향수",
+      "amount": 200000,
+      "description": "향수 샀습니다.",
+      "createdBy": "주댕댕"
+    },
+    {
+      "id": "1718186653753",
+      "date": "2024-06-14",
+      "item": "피자",
+      "amount": 40000,
+      "description": "피자 먹었습니다.",
+      "createdBy": "주댕댕"
+    },
+    {
+      "id": "1718189776449",
+      "date": "2024-06-21",
+      "item": "담배",
+      "amount": 50000,
+      "description": "담배 샀습니다.",
+      "createdBy": "주댕댕"
+    },
+    {
+      "id": "1718192632994",
+      "date": "2024-06-24",
+      "item": "비타민",
+      "amount": 4000,
+      "description": "비타민 샀다.",
+      "createdBy": "주댕댕"
+    },
+    {
+      "id": "1718262045709",
+      "date": "2024-06-29",
+      "item": "마우스",
+      "amount": 50000,
+      "description": "마우스 샀습니다.",
+      "createdBy": "주현우"
+    },
+    {
+      "id": "1718262367597",
+      "date": "2024-07-16",
+      "item": "커피",
+      "amount": 20000,
+      "description": "커피 샀습니다~!",
+      "createdBy": "주댕댕"
+    },
+    {
+      "id": "1718262625796",
+      "date": "2024-04-17",
+      "item": "립밤",
+      "amount": 20000,
+      "description": "립밤 샀습니다.",
+      "createdBy": "주대애앵~!"
+    }
+  ]
+}

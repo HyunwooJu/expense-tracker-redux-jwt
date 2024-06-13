@@ -1,8 +1,9 @@
-import React, { useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { deleteExpense, updateExpense } from "../store/expenseSlice";
+import { useExpenses } from "../hooks/useExpenses";
+import { useSelector } from "react-redux";
+import { selectUser } from "../store/authSlice";
 
 const Container = styled.div`
   padding: 20px;
@@ -51,52 +52,78 @@ const BackButton = styled(Button)`
 const ExpenseDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const expenses = useSelector((state) => state.expenses.expenses || []);
-  const expense = expenses.find((expense) => expense.id === id);
+  const { expenses, updateExpense, deleteExpense } = useExpenses();
+  const user = useSelector(selectUser);
 
-  const dateRef = useRef();
-  const itemRef = useRef();
-  const amountRef = useRef();
-  const descriptionRef = useRef();
+  const expense = expenses?.find((expense) => expense.id === id);
+
+  const [date, setDate] = useState("");
+  const [item, setItem] = useState("");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (expense) {
+      setDate(expense.date);
+      setItem(expense.item);
+      setAmount(expense.amount);
+      setDescription(expense.description);
+    }
+  }, [expense]);
+
+  const handleUpdate = () => {
+    updateExpense({
+      id: expense.id,
+      date,
+      item,
+      amount: parseInt(amount, 10),
+      description,
+      createdBy: expense.createdBy, // 수정 시 작성자 정보 유지
+    });
+    navigate("/home");
+  };
+
+  const handleDelete = () => {
+    if (window.confirm("정말로 이 지출 항목을 삭제하시겠습니까?")) {
+      deleteExpense(id);
+      navigate("/home");
+    }
+  };
 
   if (!expense) {
     return <div>지출 항목을 찾을 수 없습니다.</div>;
   }
 
-  const handleUpdate = () => {
-    const updatedExpense = {
-      ...expense,
-      date: dateRef.current.value,
-      item: itemRef.current.value,
-      amount: parseInt(amountRef.current.value, 10),
-      description: descriptionRef.current.value,
-    };
-    dispatch(updateExpense(updatedExpense));
-    navigate("/");
-  };
-
-  const handleDelete = () => {
-    if (window.confirm("정말로 이 지출 항목을 삭제하시겠습니까?")) {
-      dispatch(deleteExpense(id));
-      navigate("/");
-    }
-  };
+  if (expense.createdBy !== user.username) {
+    return <div>수정 권한이 없습니다!</div>;
+  }
 
   return (
     <Container>
-      <Input type="date" defaultValue={expense.date} ref={dateRef} />
-      <Input type="text" defaultValue={expense.item} ref={itemRef} />
-      <Input type="number" defaultValue={expense.amount} ref={amountRef} />
+      <Input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+      />
       <Input
         type="text"
-        defaultValue={expense.description}
-        ref={descriptionRef}
+        value={item}
+        onChange={(e) => setItem(e.target.value)}
+      />
+      <Input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+      />
+      <Input
+        type="text"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
       />
       <ButtonGroup>
         <UpdateButton onClick={handleUpdate}>수정</UpdateButton>
         <DeleteButton onClick={handleDelete}>삭제</DeleteButton>
-        <BackButton onClick={() => navigate("/")}>뒤로 가기</BackButton>
+        <BackButton onClick={() => navigate("/home")}>뒤로 가기</BackButton>
       </ButtonGroup>
     </Container>
   );

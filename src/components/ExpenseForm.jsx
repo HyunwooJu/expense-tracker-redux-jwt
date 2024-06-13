@@ -1,27 +1,26 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { addExpense } from "../store/expenseSlice";
+import { useSelector } from "react-redux";
+import { selectUser } from "../store/authSlice";
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ onAddExpense }) => {
   const [date, setDate] = useState("");
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
-  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!date || !item || !amount || !description) return;
-    dispatch(
-      addExpense({
-        id: Date.now().toString(),
-        date,
-        item,
-        amount: parseInt(amount, 10),
-        description,
-      })
-    );
+    onAddExpense({
+      id: Date.now().toString(),
+      date,
+      item,
+      amount: parseInt(amount, 10),
+      description,
+      createdBy: user.username,
+    });
     setDate("");
     setItem("");
     setAmount("");

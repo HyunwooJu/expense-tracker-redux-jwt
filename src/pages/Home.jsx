@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import { addExpense, setSelectedMonth } from "../store/expenseSlice";
 import ExpenseForm from "../components/ExpenseForm";
 import ExpenseSummary from "../components/ExpenseSummary";
 import MonthSelector from "../components/MonthSelector";
 import ExpenseList from "../components/ExpenseList";
+import { useExpenses } from "../hooks/useExpenses";
 
 const Container = styled.div`
   padding: 20px;
@@ -14,17 +13,18 @@ const Container = styled.div`
 `;
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const expenses = useSelector((state) => state.expenses.expenses || []);
-  const selectedMonth = useSelector((state) => state.expenses.selectedMonth);
+  const {
+    expenses,
+    isLoading,
+    error,
+    addExpense,
+    updateExpense,
+    deleteExpense,
+  } = useExpenses();
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
 
-  const handleAddExpense = (expense) => {
-    dispatch(addExpense(expense));
-  };
-
-  const handleMonthChange = (month) => {
-    dispatch(setSelectedMonth(month));
-  };
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading expenses</div>;
 
   const filteredExpenses = expenses.filter(
     (expense) => new Date(expense.date).getMonth() + 1 === selectedMonth
@@ -32,16 +32,20 @@ const Home = () => {
 
   return (
     <Container>
-      <ExpenseForm onAddExpense={handleAddExpense} />
+      <ExpenseForm onAddExpense={addExpense} />
       <MonthSelector
         selectedMonth={selectedMonth}
-        onMonthChange={handleMonthChange}
+        onMonthChange={setSelectedMonth}
       />
       <ExpenseSummary
         expenses={filteredExpenses}
         selectedMonth={selectedMonth}
       />
-      <ExpenseList expenses={filteredExpenses} />
+      <ExpenseList
+        expenses={filteredExpenses}
+        onUpdateExpense={updateExpense}
+        onDeleteExpense={deleteExpense}
+      />
     </Container>
   );
 };
