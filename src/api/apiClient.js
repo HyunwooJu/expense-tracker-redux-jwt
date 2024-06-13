@@ -1,11 +1,11 @@
 import axios from "axios";
 
-// Glitch 프로젝트의 URL로 설정
-const API_URL = "https://voltaic-coal-chokeberry.glitch.me";
+// 환경 변수에서 API URL을 가져옴
+const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 // axios 인스턴스 생성
 const apiClient = axios.create({
-  baseURL: API_URL,
+  baseURL: `${API_URL}:5001`, // 포트 번호를 포함하여 설정
 });
 
 // 요청 인터셉터를 통해 토큰 추가
