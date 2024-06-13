@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import apiClient from "../apiClient";
+import apiClient from "../api/apiClient";
 import { useSelector } from "react-redux";
 import { selectUser } from "../store/authSlice";
 
