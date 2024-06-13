@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "/api"; // 프록시 설정에 맞게 변경
+// 환경 변수에서 API URL을 가져옴
+const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 // axios 인스턴스 생성
 const apiClient = axios.create({
