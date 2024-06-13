@@ -1,11 +1,13 @@
 import axios from "axios";
 
-// 환경 변수에서 API URL을 가져옴
-const API_URL = process.env.REACT_APP_API_BASE_URL;
+// Glitch 프로젝트의 URL로 설정
+const API_URL =
+  process.env.REACT_APP_API_BASE_URL ||
+  "https://dolomite-volcano-bamboo.glitch.me";
 
 // axios 인스턴스 생성
 const apiClient = axios.create({
-  baseURL: `${API_URL}:5001`, // 포트 번호를 포함하여 설정
+  baseURL: `${API_URL}`, // 포트 번호를 포함하지 않음
 });
 
 // 요청 인터셉터를 통해 토큰 추가
